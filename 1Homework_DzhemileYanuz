@@ -1,0 +1,23 @@
+#Problem1
+for(i in 1:10){
+  print(i*3)
+}
+
+#Problem2
+c = rnorm(10,mean=0,sd=1)
+print(c>1)
+
+#Problem3
+Males - 1, females - 0
+a <- c(1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+ResultsVector <- NULL
+ResultsVector2 <- NULL
+for(i in 1:20000){
+    ResultsVector <- c(sample(a, 5, replace = FALSE))
+  if(sum(ResultsVector) == 3){
+    ResultsVector2 = c(ResultsVector2, 1)
+  } else {
+    ResultsVector2 = c(ResultsVector2, 0)
+  }
+}
+sum(ResultsVector2) / length(ResultsVector2)
