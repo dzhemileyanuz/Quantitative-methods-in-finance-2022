@@ -1,0 +1,77 @@
+#Problem1
+Bet <- NULL
+Result <- NULL
+Money <- NULL
+for (i in 1:1000) {
+  BetNum <- 0
+  Bet <- 1
+  Money <- 100
+  while (Money > 0) {
+    BetNum <- BetNum + 1
+    WinOrLoss <- sample(c(0, 1), 1, replace = TRUE, prob = c(0.514, 0.486))
+    if (winOrLoss == 0) {
+      Money <- Money - Bet
+      Bet <- min(Money, Bet * 2)
+    } else {
+      Money <- Money + Bet
+      Bet <- 1
+    }
+  }
+  Result <- c(Result, BetNum)
+}
+sum(Result)/1000
+
+#Problem5.2.4
+library(nycflights13)
+library(tidyverse)
+view(flights)
+
+Delay <- filter(flights, arr_delay >= 120 )
+Destin <- filter(flights, dest == "IAH" | dest == "HOU" )
+Carrier <- filter(flights, carrier %in% c("AA", "DL", "UA"))
+Summer <- filter(flights, month >= 7, month <= 9)
+ArriveAndDeparture <- filter(flights, arr_delay > 120, dep_delay <= 0)
+Made_up <- filter(flights, dep_delay >= 60, dep_delay - arr_delay > 30)
+Midnight <- filter(flights, dep_time <= 600 | dep_time == 2400)
+Summer2 <- filter(flights, between(month, 7, 9))
+MissingDep <- filter(flights, is.na(dep_time))
+NA ^ 0
+
+#Probolem5.3.1
+ArrangeNA <- arrange(flights, desc(is.na(dep_time)), dep_time)
+MostDelayed <- arrange(flights, desc(dep_delay))
+TheFastest <- arrange(flights, desc(distance / air_time))
+TheFarthest <- arrange(flights, desc(distance))
+
+#Problem5.4.1
+select(flights, dep_time, dep_delay, arr_time, arr_delay)
+select(flights, 4, 6, 7, 9)
+select(flights, starts_with("dep_"), starts_with("arr_"))
+m <- c("year", "month", "day", "variable_not_in_the_dataframe")
+select(flights, any_of(m))
+select(flights, contains("TIME", ignore.case = FALSE))
+
+#
+# Problem 5.4.1 ---- 
+
+#1
+select(flights, year, month, day)
+select(flights, "year", "month", "day")
+select(flights, 1, 2, 3)
+
+#2
+select(flights, year, month, year, year) #it does not include them 
+
+#3 
+choice <- c("year", "month", "day", "dep_delay", "arr_delay")
+select(flights, any_of(choice))
+
+# Problem 5.5.2
+TimesChange <- mutate(flights,
+                       dep_time_mins = (dep_time %/% 100 * 60 + dep_time %% 100) %% 1440,
+                       sched_dep_time_mins = (sched_dep_time %/% 100 * 60 +
+                                                sched_dep_time %% 100) %% 1440)
+
+rankme <- tibble(
+  x = c(10, 5, 1, 5, 5)
+)
