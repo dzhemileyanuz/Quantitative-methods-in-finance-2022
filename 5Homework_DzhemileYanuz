@@ -1,0 +1,71 @@
+#Problem1
+  library(tidyverse) 
+  library(tidyquant) 
+  library(lubridate) 
+  library(quantmod) 
+  library(TTR)
+data <- c(0, 2, 4, 6, 7, 3, 2, 9, 17, 14, 15, 0, 4, 3)
+for (i in 1:length(data)){
+  d <- c(d, mean(data[i:(i+3)]))}
+d <- ifelse(is.na(d), NA, sss)
+# 1.2 cor
+m <- c(41, 19, 23, 40, 55, 57, 33)
+n <- c(94, 60, 74, 71, 82, 76, 61)
+k <- (mean(sum(m-mean(m))*sum(n-mean(n))))/(sd(m)*sd(n))
+l <- cor(m, n)
+
+#Problem2
+for(i in 1:100){
+  if(i==1){
+    next
+  }
+  else if(i==2){
+    i =2}
+  else if(i%%2==0){
+    next}
+  else if(i==3){
+    i=3}
+  else if(i%%3==0){
+    next
+  }
+  else if (i==5){
+    i=5}
+  else if(i%%5==0){
+    next
+  }
+  else if(i==7){
+    i=7}
+  else if(i%%7==0){
+    next
+  }
+  print(i)}
+
+stock_prices <- tidyquant::tq_get("NKE")
+
+#Problem3
+library(tidyquant)
+data <- tidyquant::tq_get("FB",
+                          get = "stock.prices",
+                          from = "2019-01-01",
+                          to   = "2021-04-01")%>%
+  dplyr::select(symbol, date, adjusted)
+
+Dates <- data.frame(Date = rep(seq.Date(from = ymd('2019-01-01'), 
+                                        to = ymd('2021-04-01'), 
+                                        by = 'days'), 3),
+                    Symbol = rep("FB", 822))
+  Join <- Dates %>%
+  dplyr::left_join(data, by = c("Date" = "date", "Symbol" = "symbol")) %>%
+  group_by(Symbol) %>%
+  fill(adjusted, .direction = "downup")
+  
+  MM <- JoinNew %>%
+  mutate(BenchmarkMoney = 100,
+         sss = adjusted/lag(adjusted),
+         sss = ifelse(is.na(sss), 1, sss),
+         BenchmarkMoney1 = cumprod(sss),
+         StrategyMoney = 100,
+         sss1 = case_when(signal == "do not have stocks" ~ 1,
+                          signal == "do have stocks" ~ sss,
+                          TRUE ~ 999999999),
+         StrategyMoney1 = cumprod(sss1))
